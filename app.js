@@ -212,11 +212,11 @@ function updateMetricUI() {
     refs.bar.style.width = `${value}%`;
     refs.bar.parentElement?.setAttribute('aria-valuenow', String(value));
 
-    let gradient = 'linear-gradient(90deg, #ff7d8f, #f0b56b)';
-    if (value >= 65) gradient = 'linear-gradient(90deg, #8d7cff, #88f7c8)';
-    else if (value >= 35) gradient = 'linear-gradient(90deg, #5b89ff, #8ddcff)';
+    let fill = '#6b7280';
+    if (value >= 65) fill = '#d4d4d8';
+    else if (value >= 35) fill = '#9ca3af';
 
-    refs.bar.style.background = gradient;
+    refs.bar.style.background = fill;
   });
 }
 
@@ -237,7 +237,7 @@ function renderScenario() {
   choiceB.textContent = scenario.choices[1].label;
   choiceA.disabled = false;
   choiceB.disabled = false;
-  feedbackEl.textContent = 'Choisissez une dérive administrative raisonnablement supportable.';
+  feedbackEl.textContent = 'Choisissez librement. Le système commentera après coup.';
 }
 
 function applyChoice(choiceIndex) {
