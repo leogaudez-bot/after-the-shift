@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>After the Shift — Protocole de Rééquilibrage</title>
+    <meta
+      name="description"
+      content="Une mini simulation satirique en français où vous pilotez un protocole algorithmique absurde et observez ses effets sur la société."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="intro-screen" class="screen active card intro-card">
+        <p class="eyebrow">Division civique prédictive · Version 9.7b</p>
+        <h1>After the Shift</h1>
+        <h2>Le Protocole de Rééquilibrage</h2>
+        <p class="lede">
+          L'IA administrative <strong>ORACLE-RH</strong> vous nomme responsable de la post-journée.
+          Votre mission: arbitrer huit décisions absurdes, optimiser les tableaux de bord et
+          préserver un minimum d'humanité avant que la ville ne devienne une présentation PowerPoint.
+        </p>
+        <ul class="bullet-list">
+          <li>8 tours, 2 choix par crise</li>
+          <li>4 indicateurs: Emploi, Stabilité, Innovation, Humanité</li>
+          <li>Plusieurs fins selon vos arbitrages</li>
+        </ul>
+        <button id="start-btn" class="primary-btn big-btn">Lancer le protocole</button>
+      </section>
+
+      <section id="game-screen" class="screen card" aria-live="polite">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Tour <span id="turn-index">1</span> / 8</p>
+            <h3 id="scenario-title">Analyse en cours…</h3>
+          </div>
+          <div class="badge">ORACLE-RH en ligne</div>
+        </header>
+
+        <section class="stats-panel" aria-label="Indicateurs sociaux">
+          <div class="stat-row">
+            <div class="stat-head"><span>Emploi</span><strong id="emploi-value">50</strong></div>
+            <div class="bar" role="progressbar" aria-label="Emploi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span id="emploi-bar"></span></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-head"><span>Stabilité</span><strong id="stabilite-value">50</strong></div>
+            <div class="bar" role="progressbar" aria-label="Stabilité" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span id="stabilite-bar"></span></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-head"><span>Innovation</span><strong id="innovation-value">50</strong></div>
+            <div class="bar" role="progressbar" aria-label="Innovation" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span id="innovation-bar"></span></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-head"><span>Humanité</span><strong id="humanite-value">50</strong></div>
+            <div class="bar" role="progressbar" aria-label="Humanité" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span id="humanite-bar"></span></div>
+          </div>
+        </section>
+
+        <section class="scenario-card">
+          <p id="scenario-text" class="scenario-text"></p>
+          <div id="scenario-tags" class="tag-row"></div>
+        </section>
+
+        <section class="decision-panel">
+          <button id="choice-a" class="decision-btn"></button>
+          <button id="choice-b" class="decision-btn alt"></button>
+        </section>
+
+        <p id="feedback" class="feedback" aria-live="polite" aria-atomic="true"></p>
+      </section>
+
+      <section id="ending-screen" class="screen card ending-card">
+        <p class="eyebrow">Rapport terminal consolidé</p>
+        <h3 id="ending-title">Fin détectée</h3>
+        <p id="ending-text" class="lede"></p>
+        <div id="ending-stats" class="ending-stats"></div>
+        <div class="ending-actions">
+          <button id="share-btn" class="primary-btn">Partager le rapport</button>
+          <button id="restart-btn" class="secondary-btn">Relancer la simulation</button>
+        </div>
+        <p id="share-status" class="share-status" aria-live="polite"></p>
+        <textarea id="share-fallback" class="share-fallback" readonly aria-label="Texte du rapport à copier manuellement"></textarea>
+      </section>
+    </main>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>

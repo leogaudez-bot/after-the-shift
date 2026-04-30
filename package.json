@@ -1,0 +1,13 @@
+{
+  "name": "after-the-shift",
+  "version": "1.0.0",
+  "description": "Mini simulation satirique en une page sur un protocole algorithmique de rééquilibrage.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
