@@ -22,23 +22,27 @@
           <span class="eyebrow">Division civique prédictive · version 12.0</span>
           <h1>After the Shift</h1>
           <p class="subtitle">
-            Une <strong>purge humaine soft</strong>, bureaucratique et grotesque.
-            Chaque soir, l'ORACLE-RH recalcule qui reste rentable, docile, visible ou discrètement supprimable.
+            Une purge humaine bureaucratique, satirique et jouable. Chaque soir, ORACLE-RH
+            recalcule votre valeur sociale. Vous choisissez. Le système juge.
           </p>
 
-          <div class="pill-row">
-            <div class="pill-card">
-              <strong>Boucle</strong>
-              <span>Scan → choix → verdict</span>
-            </div>
-            <div class="pill-card">
-              <strong>Direction</strong>
-              <span>Dossiers, tampons, propagande, ville toxique</span>
-            </div>
+          <div class="pill-row compact">
             <div class="pill-card">
               <strong>Format</strong>
-              <span>8 jours · 4 choix · 1 classement final</span>
+              <span>8 nuits de test</span>
             </div>
+            <div class="pill-card">
+              <strong>Choix</strong>
+              <span>4 options à chaque crise</span>
+            </div>
+            <div class="pill-card">
+              <strong>Règle</strong>
+              <span>Le verdict tombe après validation</span>
+            </div>
+          </div>
+
+          <div class="cta-row hero-actions">
+            <a class="primary-btn hero-link" href="#test-zone">Tester l'application</a>
           </div>
         </div>
 
@@ -63,169 +67,103 @@
         </div>
       </section>
 
-      <section class="layout">
-        <aside class="panel wireframe-panel">
-          <div class="section-title">
-            <div>
-              <span class="badge">Wireframe</span>
-              <h2>Pourquoi cette version marche mieux</h2>
-            </div>
-            <span class="chip">3 écrans · 1 décision à la fois</span>
+      <section class="panel proto-panel test-panel" id="test-zone">
+        <div class="section-title">
+          <div>
+            <span class="badge">Test</span>
+            <h2>Prenez une décision. Voyez ce que le système vous fait.</h2>
           </div>
+          <span class="chip" id="phase-chip">Phase · Scan du soir</span>
+        </div>
 
-          <div class="wire-grid">
-            <article class="wire-card" data-index="1">
-              <strong>Écran 01 · Scan du soir</strong>
-              <ul>
-                <li>score du jour immédiatement visible</li>
-                <li>alertes absurdes et propagande RH</li>
-                <li>jauges lisibles sans bruit inutile</li>
-                <li>CTA principal très clair</li>
-              </ul>
-            </article>
+        <div class="phone-wrap solo">
+          <div class="phone-shell">
+            <div class="phone">
+              <div class="phone-top">
+                <span id="day-label">Shift day 01</span>
+                <span id="time-label">22:14 · District 9</span>
+              </div>
 
-            <article class="wire-card" data-index="2">
-              <strong>Écran 02 · Choix de survie</strong>
-              <ul>
-                <li>4 options nettes avec vrai contraste</li>
-                <li>pas de stats dans les cartes de choix</li>
-                <li>sélection explicite + validation</li>
-                <li>copie courte, froide, bureaucratique</li>
-              </ul>
-            </article>
+              <div class="phone-stage">
+                <div class="ticker" id="ticker">SYSTEM NOTE · Votre valeur humaine sera recalculée ce soir.</div>
 
-            <article class="wire-card" data-index="3">
-              <strong>Écran 03 · Verdict</strong>
-              <ul>
-                <li>retour visuel immédiat</li>
-                <li>recalcul des jauges</li>
-                <li>sentence narrative plus marquante</li>
-                <li>montée vers un vrai verdict final</li>
-              </ul>
-            </article>
-          </div>
-
-          <div class="legend-card">
-            <strong>Univers</strong>
-            <p><strong>Fond crédible :</strong> score, conformité, fatigue, visibilité, procédures.</p>
-            <p><strong>Forme stylée :</strong> file d'attente, scanner, mascotte toxique, couleurs agressives, satire sociale.</p>
-            <p><strong>Lisibilité :</strong> une colonne mobile, une décision clé, un rythme beaucoup plus net.</p>
-          </div>
-        </aside>
-
-        <section class="panel proto-panel">
-          <div class="section-title">
-            <div>
-              <span class="badge">Prototype</span>
-              <h2>Flow interactif</h2>
-            </div>
-            <span class="chip" id="phase-chip">Phase · Scan du soir</span>
-          </div>
-
-          <div class="phone-wrap">
-            <div class="phone-shell">
-              <div class="phone">
-                <div class="phone-top">
-                  <span id="day-label">Shift day 01</span>
-                  <span id="time-label">22:14 · District 9</span>
-                </div>
-
-                <div class="phone-stage">
-                  <div class="ticker" id="ticker">SYSTEM NOTE · Votre valeur humaine sera recalculée ce soir.</div>
-
-                  <section id="screen-scan">
-                    <div class="status-card">
-                      <div class="status-head">
-                        <div>
-                          <span class="status-label" id="file-label">Citizen file · ATS-001</span>
-                          <div class="score" id="score-value">64</div>
-                          <div class="muted">Indice de maintenabilité sociale</div>
-                        </div>
-                        <div class="stamp" id="stamp">Stable</div>
-                      </div>
-                    </div>
-
-                    <div class="banner toxic">
+                <section id="screen-scan">
+                  <div class="status-card">
+                    <div class="status-head">
                       <div>
-                        <strong id="bulletin-title">Bulletin de rendement</strong>
-                        <div class="muted" id="bulletin-copy">Vos efforts restent monétisables.</div>
+                        <span class="status-label" id="file-label">Citizen file · ATS-001</span>
+                        <div class="score" id="score-value">64</div>
+                        <div class="muted">Indice de maintenabilité sociale</div>
                       </div>
-                      <span class="chip">good</span>
+                      <div class="stamp" id="stamp">Stable</div>
                     </div>
+                  </div>
 
-                    <div class="banner violet">
-                      <div>
-                        <strong id="ad-title">Message civique obligatoire</strong>
-                        <div class="muted" id="ad-copy">Souriez pendant le scan. Le doute est visible.</div>
-                      </div>
-                      <span class="chip">notice</span>
+                  <div class="banner toxic">
+                    <div>
+                      <strong id="bulletin-title">Bulletin de rendement</strong>
+                      <div class="muted" id="bulletin-copy">Vos efforts restent monétisables.</div>
                     </div>
+                    <span class="chip">good</span>
+                  </div>
 
-                    <div class="banner rust">
-                      <div>
-                        <strong id="memo-title">Mémo ORACLE-RH</strong>
-                        <div class="muted" id="memo-copy">Un voisin a signalé une baisse d'enthousiasme sur votre étage.</div>
-                      </div>
-                      <span class="chip">risk</span>
+                  <div class="banner violet">
+                    <div>
+                      <strong id="ad-title">Message civique obligatoire</strong>
+                      <div class="muted" id="ad-copy">Souriez pendant le scan. Le doute est visible.</div>
                     </div>
+                    <span class="chip">notice</span>
+                  </div>
 
-                    <div class="stat-strip" id="stats-overview"></div>
+                  <div class="banner rust">
+                    <div>
+                      <strong id="memo-title">Mémo ORACLE-RH</strong>
+                      <div class="muted" id="memo-copy">Un voisin a signalé une baisse d'enthousiasme sur votre étage.</div>
+                    </div>
+                    <span class="chip">risk</span>
+                  </div>
+
+                  <div class="stat-strip" id="stats-overview"></div>
+
+                  <div class="cta-row">
+                    <button class="primary-btn" id="start-day">Lancer l'évaluation</button>
+                  </div>
+                </section>
+
+                <section id="screen-choice" class="hidden">
+                  <div class="phone-section">
+                    <span class="section-kicker">Choisir son adaptation quotidienne</span>
+                    <h3 id="scenario-title">Reste utile avant d'être classé jetable.</h3>
+                    <p class="muted" id="scenario-text">Une décision. Quatre manières de survivre à un système malade.</p>
+
+                    <div class="choices" id="choices"></div>
 
                     <div class="cta-row">
-                      <button class="primary-btn" id="start-day">Lancer l'évaluation</button>
+                      <button class="primary-btn" id="confirm-choice">Valider l'action</button>
+                      <button class="ghost-btn" id="back-to-scan">Retour</button>
                     </div>
-                  </section>
+                  </div>
+                </section>
 
-                  <section id="screen-choice" class="hidden">
-                    <div class="phone-section">
-                      <span class="section-kicker">Choisir son adaptation quotidienne</span>
-                      <h3 id="scenario-title">Reste utile avant d'être classé jetable.</h3>
-                      <p class="muted" id="scenario-text">Une décision. Quatre manières de survivre à un système malade.</p>
-
-                      <div class="choices" id="choices"></div>
-
-                      <div class="cta-row">
-                        <button class="primary-btn" id="confirm-choice">Valider l'action</button>
-                        <button class="ghost-btn" id="back-to-scan">Retour</button>
-                      </div>
+                <section id="screen-result" class="hidden">
+                  <div class="result-card" id="result-card">
+                    <span class="result-label" id="result-kicker">Verdict du soir</span>
+                    <div class="score" id="result-score">68</div>
+                    <div class="stamp" id="result-stamp">Maintenu</div>
+                    <div class="result-quote" id="result-copy">
+                      Votre enthousiasme paraît désormais artificiel. La surveillance est prolongée.
                     </div>
-                  </section>
-
-                  <section id="screen-result" class="hidden">
-                    <div class="result-card" id="result-card">
-                      <span class="result-label" id="result-kicker">Verdict du soir</span>
-                      <div class="score" id="result-score">68</div>
-                      <div class="stamp" id="result-stamp">Maintenu</div>
-                      <div class="result-quote" id="result-copy">
-                        Votre enthousiasme paraît désormais artificiel. La surveillance est prolongée.
-                      </div>
-                      <div class="result-stats" id="result-stats"></div>
-                      <div class="cta-row">
-                        <button class="primary-btn" id="restart-day">Jour suivant</button>
-                        <button class="ghost-btn" id="replay-choice">Revoir les choix</button>
-                      </div>
+                    <div class="result-stats" id="result-stats"></div>
+                    <div class="cta-row">
+                      <button class="primary-btn" id="restart-day">Jour suivant</button>
+                      <button class="ghost-btn" id="replay-choice">Revoir les choix</button>
                     </div>
-                  </section>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-cards">
-              <div class="mini-card">
-                <strong>Direction</strong>
-                <p>Plus froid, plus net, plus satirique — moins de dispersion visuelle.</p>
-              </div>
-              <div class="mini-card">
-                <strong>Jauges</strong>
-                <p>Emploi, stabilité, innovation, humanité. Visibles au bon moment, jamais collées aux choix.</p>
-              </div>
-              <div class="mini-card">
-                <strong>But</strong>
-                <p>Tenir 8 jours sans devenir un pur produit, ni une pièce jointe supprimable.</p>
+                  </div>
+                </section>
               </div>
             </div>
           </div>
-        </section>
+        </div>
       </section>
     </main>
 

@@ -257,7 +257,7 @@ function renderChoices() {
     button.innerHTML = `
       <span class="choice-title">${String.fromCharCode(65 + index)} · ${choice.tone}</span>
       <strong>${choice.label}</strong>
-      <p>${choice.feedback}</p>
+      <p>Conséquences masquées jusqu'au verdict.</p>
     `;
     button.addEventListener('click', () => {
       selectedChoice = index;

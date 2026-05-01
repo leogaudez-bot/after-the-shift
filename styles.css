@@ -127,6 +127,18 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.hero-actions {
+  margin-top: 18px;
+  max-width: 320px;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .pill-card,
 .wire-card,
 .legend-card,
@@ -358,8 +370,11 @@ h3 {
   gap: 24px;
 }
 
-.wireframe-panel,
 .proto-panel { padding: 24px; }
+
+.test-panel {
+  margin-top: 24px;
+}
 
 .section-title {
   display: flex;
@@ -399,6 +414,11 @@ h3 {
   grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
   gap: 18px;
   align-items: start;
+}
+
+.phone-wrap.solo {
+  grid-template-columns: minmax(0, 420px);
+  justify-content: center;
 }
 
 .phone-shell {
