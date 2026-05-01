@@ -14,22 +14,52 @@
     <main class="app-shell">
       <section id="intro-screen" class="screen active card intro-card">
         <div class="intro-grid">
-          <div>
-            <p class="eyebrow">Division civique prédictive · version 11.4 purge-ready</p>
+          <div class="intro-copy">
+            <p class="eyebrow">Division civique prédictive · version 11.8 purge-ready</p>
             <h1>After the Shift</h1>
             <p class="lede">
-              Une <strong>purge humaine soft</strong>, bureaucratique et grotesque. Chaque soir,
-              l'ORACLE-RH décide qui reste désirable, utile, recyclable ou discrètement effaçable.
+              Une <strong>purge humaine soft</strong>, bureaucratique, grotesque, marketée comme un service.
+              Chaque soir, l'ORACLE-RH recalcule qui reste rentable, présentable, recyclable ou discrètement supprimable.
             </p>
             <p class="intro-meta">8 tours · 4 jauges · 4 propositions par scène · plusieurs fins</p>
             <p class="intro-note">
-              Direction: <strong>dystopie administrative</strong> + <strong>cartoon apocalypse</strong>.
-              Tu ne sauves pas le monde, tu négocies juste ton maintien dans le tableur vivant.
+              Tu ne sauves pas le monde. Tu négocies juste ton maintien dans le
+              <strong>tableur vivant</strong> d'une ville qui sourit pendant qu'elle trie ses humains.
             </p>
             <div class="intro-actions">
               <button id="start-btn" class="primary-btn">Lancer l'évaluation</button>
             </div>
           </div>
+
+          <section class="hero-stage" aria-label="Illustration principale de l'univers">
+            <div class="hero-glow"></div>
+            <div class="hero-sun"></div>
+            <div class="hero-scan hero-scan-a"></div>
+            <div class="hero-scan hero-scan-b"></div>
+            <div class="hero-billboard board-left">
+              <span>USEFUL</span>
+              <strong>RESTE MONÉTISABLE</strong>
+            </div>
+            <div class="hero-billboard board-right">
+              <span>SCAN DU SOIR</span>
+              <strong>HUMANITÉ EN COURS DE TRI</strong>
+            </div>
+            <div class="hero-queue">
+              <span class="queue-head q1"></span>
+              <span class="queue-head q2"></span>
+              <span class="queue-head q3"></span>
+            </div>
+            <div class="hero-cityline" aria-hidden="true">
+              <span class="hero-tower t1"></span>
+              <span class="hero-tower t2"></span>
+              <span class="hero-tower t3"></span>
+              <span class="hero-tower t4"></span>
+              <span class="hero-tower t5"></span>
+              <span class="hero-tower t6"></span>
+            </div>
+            <div class="hero-sticker hero-sticker-top">COMPLY OR FADE</div>
+            <div class="hero-sticker hero-sticker-bottom">DISTRICT 9 · ORACLE-RH CERTIFIED</div>
+          </section>
 
           <aside class="poster-wall" aria-label="Illustrations d'ambiance">
             <article class="poster poster-alert">
@@ -62,17 +92,19 @@
 
         <div id="turn-track" class="turn-track" aria-label="Progression dans la partie"></div>
 
-        <section class="visual-panel" aria-label="État visuel du district">
-          <div id="city-visual" class="city-visual mood-balanced">
+        <section class="visual-panel" aria-label="Illustration réactive du district">
+          <div id="city-visual" class="city-visual mood-balanced scene-commute">
             <div class="city-noise"></div>
             <div class="city-sky"></div>
             <div class="warning-sun"></div>
             <div class="scan-ring ring-a"></div>
             <div class="scan-ring ring-b"></div>
-            <div class="propaganda-banner banner-left">USEFUL</div>
-            <div class="propaganda-banner banner-right">COMPLY</div>
+            <div id="scene-sign-left" class="propaganda-banner banner-left">USEFUL</div>
+            <div id="scene-sign-right" class="propaganda-banner banner-right">COMPLY</div>
             <div class="mascot mascot-left" aria-hidden="true"></div>
             <div class="mascot mascot-right" aria-hidden="true"></div>
+            <div class="scene-prop scene-prop-a"></div>
+            <div class="scene-prop scene-prop-b"></div>
             <div class="cityline" aria-hidden="true">
               <span class="tower tower-1"></span>
               <span class="tower tower-2"></span>
@@ -128,8 +160,24 @@
 
       <section id="ending-screen" class="screen card ending-card">
         <p class="eyebrow">Verdict final</p>
-        <h3 id="ending-title">Fin détectée</h3>
-        <div id="ending-visual" class="ending-visual mood-balanced"></div>
+        <p id="ending-overline" class="ending-overline">Classement terminal en cours</p>
+        <h2 id="ending-title" class="ending-title">Fin détectée</h2>
+
+        <div id="ending-stage" class="ending-stage mood-balanced">
+          <div class="ending-aura"></div>
+          <div class="ending-burst burst-a"></div>
+          <div class="ending-burst burst-b"></div>
+          <div class="ending-burst burst-c"></div>
+          <div class="ending-badge-wrap">
+            <span id="ending-seal" class="ending-seal">CLASSÉ</span>
+            <div id="ending-visual" class="ending-visual mood-balanced">District en équilibre instable.</div>
+          </div>
+          <div class="ending-ribbons">
+            <span id="ending-ribbon-left">SURVIVE</span>
+            <span id="ending-ribbon-right">REPORT</span>
+          </div>
+        </div>
+
         <p id="ending-text" class="lede"></p>
         <div id="ending-stats" class="ending-stats"></div>
         <div class="ending-actions">

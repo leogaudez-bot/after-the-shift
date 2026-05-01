@@ -11,6 +11,11 @@ const scenarios = [
     text: 'ORACLE-RH constate que les salariés rentrent chez eux avec encore 12% d\'énergie mentale non monétisée. La direction veut convertir ce reliquat en valeur civique avant minuit.',
     tags: ['productivité', 'satire RH', 'soirée surveillée'],
     threat: 'Menace modérée',
+    scene: 'scene-commute',
+    signLeft: 'USEFUL',
+    signRight: 'REMAIN',
+    caption: 'Le district pousse encore les corps fatigués vers une dernière ligne de rendement.',
+    subcaption: 'Couloirs, barrières et néons: la fin de journée ressemble à une file d\'embarquement morale.',
     choices: [
       {
         label: 'Transformer le trajet retour en micro-mission gamifiée',
@@ -43,6 +48,11 @@ const scenarios = [
     text: 'Une grève molle perturbe le district. Un prestataire propose des drones de pacification qui diffusent des mantras d\'alignement civique avec parfum vanille-sérénité.',
     tags: ['ordre public', 'techno-solutionnisme', 'dystopie parfumée'],
     threat: 'Menace élevée',
+    scene: 'scene-drones',
+    signLeft: 'CALM',
+    signRight: 'OBEY',
+    caption: 'Des machines volantes distribuent l\'apaisement comme un abonnement premium à la docilité.',
+    subcaption: 'Le ciel devient un service client armé de slogans et de parfum synthétique.',
     choices: [
       {
         label: 'Déployer les drones dans les zones d\'affaires prioritaires',
@@ -75,6 +85,11 @@ const scenarios = [
     text: 'Le comité d\'optimisation urbaine veut supprimer les pauses café, jugées trop imprévisibles, au profit de gels énergétiques à code-barres.',
     tags: ['urbanisme', 'optimisation', 'pause interdite'],
     threat: 'Menace modérée',
+    scene: 'scene-cafe',
+    signLeft: 'FUEL',
+    signRight: 'NO PAUSE',
+    caption: 'Les terrasses sont remplacées par des distributeurs qui nourrissent sans autoriser le temps mort.',
+    subcaption: 'Une ville plus efficace, donc forcément plus étrange.',
     choices: [
       {
         label: 'Valider les bornes avec score de mastication efficace',
@@ -107,6 +122,11 @@ const scenarios = [
     text: 'Pour stimuler l\'innovation, ORACLE-RH suggère que tout citoyen devienne “junior en permanence”, avec mentor IA, badge évolutif et salaire flottant.',
     tags: ['emploi', 'formation', 'précarité premium'],
     threat: 'Menace critique',
+    scene: 'scene-junior',
+    signLeft: 'JUNIOR+',
+    signRight: 'FOREVER',
+    caption: 'Le futur du travail ressemble à un onboarding sans sortie, repeint en aventure créative.',
+    subcaption: 'Des badges brillent pendant que les repères adultes s\'effacent.',
     choices: [
       {
         label: 'Adopter le statut “junior éternel” pour rester agile',
@@ -139,6 +159,11 @@ const scenarios = [
     text: 'Les écrans publics peuvent maintenant afficher l\'humeur moyenne du quartier en temps réel. Le marketing jubile. Les habitants envisagent de devenir illisibles.',
     tags: ['données', 'vie privée', 'pub invasive'],
     threat: 'Menace élevée',
+    scene: 'scene-emotion',
+    signLeft: 'MOOD',
+    signRight: 'TRACKED',
+    caption: 'L\'espace public se transforme en thermomètre sentimental sponsorisé.',
+    subcaption: 'Même la mélancolie menace de devenir un segment marketing.',
     choices: [
       {
         label: 'Publier l\'indice émotionnel pour fluidifier la consommation',
@@ -171,6 +196,11 @@ const scenarios = [
     text: 'Faute de budget, l\'administration propose de payer une partie des services publics via des messages de reconnaissance générés par IA et des stickers civiques.',
     tags: ['finances publiques', 'absurde', 'gratitude forcée'],
     threat: 'Menace modérée',
+    scene: 'scene-tax',
+    signLeft: 'PRAISE',
+    signRight: 'PAY NOW',
+    caption: 'Les services publics demandent désormais de l\'argent ou, à défaut, une admiration performative.',
+    subcaption: 'Le district brille de gratitude pendant que les budgets claquent des dents.',
     choices: [
       {
         label: 'Accepter la taxe affective automatisée',
@@ -203,6 +233,11 @@ const scenarios = [
     text: 'Pour répartir équitablement le repos, ORACLE-RH veut attribuer les congés par tirage pseudo-spirituel optimisé, validé par horoscope statistique.',
     tags: ['repos', 'équité', 'fatigue gérée'],
     threat: 'Menace élevée',
+    scene: 'scene-vacation',
+    signLeft: 'REST?',
+    signRight: 'LOTTERY',
+    caption: 'Le repos devient un tirage de gala, avec astrologie intégrée et droit au burnout différé.',
+    subcaption: 'Dans cette ville, même la plage demande une autorisation symbolique.',
     choices: [
       {
         label: 'Lancer la loterie cosmique des congés',
@@ -235,6 +270,11 @@ const scenarios = [
     text: 'Le conseil final hésite: faut-il annoncer que tout allait selon le plan, ou reconnaître que la ville a surtout improvisé autour d\'une machine très sûre d\'elle ?',
     tags: ['communication', 'vérité', 'dernier écran'],
     threat: 'Menace critique',
+    scene: 'scene-finale',
+    signLeft: 'NARRATIVE',
+    signRight: 'CONTROL',
+    caption: 'La ville se tient sous projecteurs, prête à transformer n\'importe quel chaos en communiqué triomphal.',
+    subcaption: 'Dernier décor, dernier tri, dernier mensonge possible.',
     choices: [
       {
         label: 'Diffuser un hologramme triomphal avec indicateurs filtrés',
@@ -285,7 +325,14 @@ const turnTrackEl = document.getElementById('turn-track');
 const cityVisualEl = document.getElementById('city-visual');
 const visualCaptionEl = document.getElementById('visual-caption');
 const visualSubcaptionEl = document.getElementById('visual-subcaption');
+const sceneSignLeftEl = document.getElementById('scene-sign-left');
+const sceneSignRightEl = document.getElementById('scene-sign-right');
+const endingStageEl = document.getElementById('ending-stage');
+const endingOverlineEl = document.getElementById('ending-overline');
 const endingVisualEl = document.getElementById('ending-visual');
+const endingSealEl = document.getElementById('ending-seal');
+const endingRibbonLeftEl = document.getElementById('ending-ribbon-left');
+const endingRibbonRightEl = document.getElementById('ending-ribbon-right');
 
 const metricElements = {
   emploi: {
@@ -313,6 +360,7 @@ const endingStatsEl = document.getElementById('ending-stats');
 let currentTurn = 0;
 let finalSummary = '';
 let turnLocked = false;
+let currentSceneClass = scenarios[0].scene;
 
 function clamp(value) {
   return Math.max(0, Math.min(100, value));
@@ -337,10 +385,10 @@ function updateMetricUI() {
     refs.bar.style.width = `${value}%`;
     refs.bar.parentElement?.setAttribute('aria-valuenow', String(value));
 
-    let fill = 'linear-gradient(90deg, #6b7280 0%, #9ca3af 100%)';
+    let fill = 'linear-gradient(90deg, #84cc16 0%, #22c55e 100%)';
     if (value >= 70) fill = 'linear-gradient(90deg, #d946ef 0%, #fb7185 100%)';
     else if (value >= 45) fill = 'linear-gradient(90deg, #f59e0b 0%, #fb7185 100%)';
-    else fill = 'linear-gradient(90deg, #84cc16 0%, #22c55e 100%)';
+    else if (value >= 25) fill = 'linear-gradient(90deg, #b0b6c4 0%, #6b7280 100%)';
 
     refs.bar.style.background = fill;
   });
@@ -361,54 +409,75 @@ function renderTurnTrack() {
   );
 }
 
-function getVisualState() {
+function getMoodClass() {
   const values = Object.values(metrics);
   const average = values.reduce((sum, value) => sum + value, 0) / values.length;
 
-  if (metrics.humanite >= 70 && metrics.stabilite >= 60) {
-    return {
-      mood: 'mood-human',
-      caption: 'Le district retrouve des interstices humains.',
-      subcaption: 'Les néons hurlent encore, mais les habitants recommencent à choisir.'
-    };
-  }
-
-  if (metrics.innovation >= 78 && metrics.humanite <= 35) {
-    return {
-      mood: 'mood-machine',
-      caption: 'La machine devient l\'esthétique officielle.',
-      subcaption: 'Tout est plus fluide, sauf les êtres vivants concernés.'
-    };
-  }
-
-  if (metrics.emploi >= 75 && metrics.stabilite < 45) {
-    return {
-      mood: 'mood-overdrive',
-      caption: 'Le district produit plus vite qu\'il ne tient debout.',
-      subcaption: 'Le rendement augmente. La texture du réel devient inflammable.'
-    };
-  }
-
-  if (average < 42 || metrics.humanite <= 22) {
-    return {
-      mood: 'mood-collapse',
-      caption: 'La purge administrative ne fait même plus semblant.',
-      subcaption: 'Le décor sourit encore, mais uniquement pour les caméras internes.'
-    };
-  }
-
-  return {
-    mood: 'mood-balanced',
-    caption: 'District en équilibre instable.',
-    subcaption: 'Le décor reste drôle juste assez pour faire oublier la procédure.'
-  };
+  if (metrics.humanite >= 70 && metrics.stabilite >= 60) return 'mood-human';
+  if (metrics.innovation >= 78 && metrics.humanite <= 35) return 'mood-machine';
+  if (metrics.emploi >= 75 && metrics.stabilite < 45) return 'mood-overdrive';
+  if (average < 42 || metrics.humanite <= 22) return 'mood-collapse';
+  return 'mood-balanced';
 }
 
-function updateVisualState() {
-  const { mood, caption, subcaption } = getVisualState();
+function getNarrativeState(scenario = scenarios[currentTurn]) {
+  const mood = getMoodClass();
+  const values = Object.values(metrics);
+  const average = values.reduce((sum, value) => sum + value, 0) / values.length;
+
+  const fallbackByMood = {
+    'mood-human': {
+      caption: 'Le district retrouve des interstices humains.',
+      subcaption: 'Les néons hurlent encore, mais les habitants recommencent à choisir.'
+    },
+    'mood-machine': {
+      caption: 'La machine devient l\'esthétique officielle.',
+      subcaption: 'Tout est plus fluide, sauf les êtres vivants concernés.'
+    },
+    'mood-overdrive': {
+      caption: 'Le district produit plus vite qu\'il ne tient debout.',
+      subcaption: 'Le rendement augmente. La texture du réel devient inflammable.'
+    },
+    'mood-collapse': {
+      caption: 'La purge administrative ne fait même plus semblant.',
+      subcaption: 'Le décor sourit encore, mais uniquement pour les caméras internes.'
+    },
+    'mood-balanced': {
+      caption: 'District en équilibre instable.',
+      subcaption: 'Le décor reste drôle juste assez pour faire oublier la procédure.'
+    }
+  };
+
+  let caption = scenario?.caption || fallbackByMood[mood].caption;
+  let subcaption = scenario?.subcaption || fallbackByMood[mood].subcaption;
+
+  if (mood === 'mood-human' && average > 60) {
+    caption += ' Malgré tout, la foule reprend un peu d\'air.';
+  }
+  if (mood === 'mood-machine' && metrics.innovation > 85) {
+    subcaption = 'Tout scintille comme un produit fini, y compris la violence administrative.';
+  }
+  if (mood === 'mood-collapse' && metrics.humanite < 20) {
+    caption = 'Le district entre en purge comptable ouverte.';
+  }
+
+  return { mood, caption, subcaption };
+}
+
+function updateVisualState(scenario = scenarios[currentTurn]) {
+  const { mood, caption, subcaption } = getNarrativeState(scenario);
+  currentSceneClass = scenario?.scene || currentSceneClass;
 
   if (cityVisualEl) {
-    cityVisualEl.className = `city-visual ${mood}`;
+    cityVisualEl.className = `city-visual ${mood} ${currentSceneClass}`;
+  }
+
+  if (sceneSignLeftEl && scenario?.signLeft) {
+    sceneSignLeftEl.textContent = scenario.signLeft;
+  }
+
+  if (sceneSignRightEl && scenario?.signRight) {
+    sceneSignRightEl.textContent = scenario.signRight;
   }
 
   if (visualCaptionEl) {
@@ -423,19 +492,10 @@ function updateVisualState() {
     endingVisualEl.className = `ending-visual ${mood}`;
     endingVisualEl.textContent = caption;
   }
-}
 
-function formatDelta(value) {
-  return `${value >= 0 ? '+' : ''}${value}`;
-}
-
-function createDeltaLine(choice) {
-  return [
-    `EMP ${formatDelta(choice.effect.emploi)}`,
-    `STA ${formatDelta(choice.effect.stabilite)}`,
-    `INN ${formatDelta(choice.effect.innovation)}`,
-    `HUM ${formatDelta(choice.effect.humanite)}`
-  ].join(' · ');
+  if (endingStageEl) {
+    endingStageEl.className = `ending-stage ${mood} ${currentSceneClass}`;
+  }
 }
 
 function renderScenario() {
@@ -443,7 +503,7 @@ function renderScenario() {
   turnLocked = false;
   turnIndexEl.textContent = String(currentTurn + 1);
   renderTurnTrack();
-  updateVisualState();
+  updateVisualState(scenario);
   scenarioTitleEl.textContent = scenario.title;
   scenarioTextEl.textContent = scenario.text;
   threatLevelEl.textContent = scenario.threat;
@@ -461,7 +521,6 @@ function renderScenario() {
     button.innerHTML = `
       <span class="decision-kicker">${String.fromCharCode(65 + index)} · ${choice.tone}</span>
       <strong>${choice.label}</strong>
-      <span class="decision-delta">${createDeltaLine(choice)}</span>
     `;
   });
 
@@ -484,7 +543,7 @@ function applyChoice(choiceIndex) {
   });
 
   updateMetricUI();
-  updateVisualState();
+  updateVisualState(scenario);
   feedbackEl.textContent = choice.feedback;
   currentTurn += 1;
 
@@ -504,6 +563,9 @@ function determineEnding() {
   if (humanite >= 70 && stabilite >= 60) {
     return {
       title: 'Fin · Désobéissance administrative douce',
+      overline: 'Verdict · respiration reconquise',
+      seal: 'RELÂCHÉ',
+      ribbons: ['HUMAN', 'BREACH'],
       text: 'Vous avez assez saboté la procédure pour réintroduire du débat, du repos et quelques visages non scannés. ORACLE-RH survit, mais il doit désormais cohabiter avec des humains moins dociles.'
     };
   }
@@ -511,6 +573,9 @@ function determineEnding() {
   if (innovation >= 78 && humanite <= 35) {
     return {
       title: 'Fin · Smart-city, sentiments en option',
+      overline: 'Verdict · optimisation totale',
+      seal: 'UPGRADED',
+      ribbons: ['GLORY', 'SYSTEM'],
       text: 'Le district devient un miracle logistique: friction minimale, indicateurs maximalistes, population parfaitement décorative. Techniquement brillant. Humainement glacial.'
     };
   }
@@ -518,6 +583,9 @@ function determineEnding() {
   if (emploi >= 75 && stabilite < 45) {
     return {
       title: 'Fin · Hyperactivité panoramique',
+      overline: 'Verdict · rendement incandescent',
+      seal: 'OVERDRIVE',
+      ribbons: ['WORK', 'BURN'],
       text: 'Tout le monde a une mission, parfois trois, mais personne ne sait exactement pour quoi. L\'économie pulse fort; la société, elle, tremble comme une enseigne au néon.'
     };
   }
@@ -525,6 +593,9 @@ function determineEnding() {
   if (stabilite >= 75 && innovation < 45) {
     return {
       title: 'Fin · Paix procédurale tiède',
+      overline: 'Verdict · compromis durable',
+      seal: 'STABLE',
+      ribbons: ['PEACE', 'PAPER'],
       text: 'Vous avez évité l\'effondrement par une montagne de compromis, de comités et de formulaires lisibles. Peu héroïque, étonnamment vivable, presque subversif.'
     };
   }
@@ -532,12 +603,18 @@ function determineEnding() {
   if (average < 42 || humanite <= 20) {
     return {
       title: 'Fin · Le PowerPoint a gagné',
+      overline: 'Verdict · purge validée',
+      seal: 'PURGED',
+      ribbons: ['ERASE', 'REPLACE'],
       text: 'La purge administrative s\'est transformée en mode de gouvernement permanent. Les indicateurs sont superbes. Les habitants ressemblent à des pièces jointes nerveuses.'
     };
   }
 
   return {
     title: 'Fin · Équilibre instable mais narrativement défendable',
+    overline: 'Verdict · survie ambiguë',
+    seal: 'MAINTAINED',
+    ribbons: ['SURVIVE', 'REPORT'],
     text: 'Le système n\'a pas implosé, les citoyens non plus, et personne ne comprend vraiment comment. En dystopie RH, c\'est presque une victoire artisanale.'
   };
 }
@@ -550,8 +627,13 @@ function showEnding() {
   const ending = determineEnding();
   finalSummary = buildShareText(ending);
   renderTurnTrack();
+  updateVisualState(scenarios[scenarios.length - 1]);
+  endingOverlineEl.textContent = ending.overline;
   endingTitleEl.textContent = ending.title;
   endingTextEl.textContent = ending.text;
+  endingSealEl.textContent = ending.seal;
+  endingRibbonLeftEl.textContent = ending.ribbons[0];
+  endingRibbonRightEl.textContent = ending.ribbons[1];
   endingStatsEl.replaceChildren(
     ...Object.entries(metrics).map(([key, value]) => {
       const wrapper = document.createElement('div');
@@ -613,9 +695,10 @@ async function shareResult() {
 function startGame() {
   currentTurn = 0;
   turnLocked = false;
+  currentSceneClass = scenarios[0].scene;
   resetMetrics();
   updateMetricUI();
-  updateVisualState();
+  updateVisualState(scenarios[0]);
   renderScenario();
   setActiveScreen(gameScreen);
 }
@@ -628,4 +711,4 @@ decisionButtons.forEach((button, index) => {
 });
 
 updateMetricUI();
-updateVisualState();
+updateVisualState(scenarios[0]);
