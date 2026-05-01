@@ -6,26 +6,49 @@
     <title>After the Shift — Protocole de Rééquilibrage</title>
     <meta
       name="description"
-      content="Une mini simulation satirique en français où vous pilotez un protocole algorithmique absurde et observez ses effets sur la société."
+      content="Une mini simulation satirique en français où vous survivez à une purge sociale algorithmique entre dystopie administrative et cartoon apocalypse."
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <section id="intro-screen" class="screen active card intro-card">
-        <p class="eyebrow">Division civique prédictive · Version 9.7b</p>
-        <h1>After the Shift</h1>
-        <p class="lede">
-          L'IA administrative <strong>ORACLE-RH</strong> vous nomme responsable de la post-journée.
-          Huit décisions absurdes, aucun bon choix évident, et juste assez de marge pour laisser
-          un peu de liberté humaine dans la machine.
-        </p>
-        <p class="intro-meta">8 tours · 4 indicateurs · plusieurs fins</p>
-        <p class="intro-note">Un mini-jeu narratif. À chaque tour, vous tranchez.</p>
-        <div class="intro-actions">
-          <button id="start-btn" class="primary-btn">Jouer</button>
+        <div class="intro-grid">
+          <div>
+            <p class="eyebrow">Division civique prédictive · version 11.4 purge-ready</p>
+            <h1>After the Shift</h1>
+            <p class="lede">
+              Une <strong>purge humaine soft</strong>, bureaucratique et grotesque. Chaque soir,
+              l'ORACLE-RH décide qui reste désirable, utile, recyclable ou discrètement effaçable.
+            </p>
+            <p class="intro-meta">8 tours · 4 jauges · 4 propositions par scène · plusieurs fins</p>
+            <p class="intro-note">
+              Direction: <strong>dystopie administrative</strong> + <strong>cartoon apocalypse</strong>.
+              Tu ne sauves pas le monde, tu négocies juste ton maintien dans le tableur vivant.
+            </p>
+            <div class="intro-actions">
+              <button id="start-btn" class="primary-btn">Lancer l'évaluation</button>
+            </div>
+          </div>
+
+          <aside class="poster-wall" aria-label="Illustrations d'ambiance">
+            <article class="poster poster-alert">
+              <span class="poster-kicker">Alerte civique</span>
+              <strong>Reste monétisable.</strong>
+              <p>Tout comportement non rentable sera requalifié en folklore.</p>
+            </article>
+            <article class="poster poster-smile">
+              <span class="poster-kicker">Confort social</span>
+              <strong>Souris au scanner.</strong>
+              <p>Une population détendue est plus simple à noter.</p>
+            </article>
+            <article class="poster poster-scan">
+              <span class="poster-kicker">Maintenance humaine</span>
+              <strong>Valeur du jour en cours.</strong>
+              <p>Merci de ne pas résister pendant la calibration morale.</p>
+            </article>
+          </aside>
         </div>
-        <p class="intro-note">Choisissez librement. Le système fera semblant d'avoir tout prévu.</p>
       </section>
 
       <section id="game-screen" class="screen card" aria-live="polite">
@@ -34,15 +57,22 @@
             <p class="eyebrow">Tour <span id="turn-index">1</span> / 8</p>
             <h3 id="scenario-title">Analyse en cours…</h3>
           </div>
-          <p class="status-note">ORACLE-RH recommande, vous tranchez.</p>
+          <p class="status-note">ORACLE-RH recommande. Vous improvisez une dignité exploitable.</p>
         </header>
 
         <div id="turn-track" class="turn-track" aria-label="Progression dans la partie"></div>
 
-        <section class="visual-panel" aria-label="État visuel de la ville">
+        <section class="visual-panel" aria-label="État visuel du district">
           <div id="city-visual" class="city-visual mood-balanced">
+            <div class="city-noise"></div>
             <div class="city-sky"></div>
-            <div class="city-orb"></div>
+            <div class="warning-sun"></div>
+            <div class="scan-ring ring-a"></div>
+            <div class="scan-ring ring-b"></div>
+            <div class="propaganda-banner banner-left">USEFUL</div>
+            <div class="propaganda-banner banner-right">COMPLY</div>
+            <div class="mascot mascot-left" aria-hidden="true"></div>
+            <div class="mascot mascot-right" aria-hidden="true"></div>
             <div class="cityline" aria-hidden="true">
               <span class="tower tower-1"></span>
               <span class="tower tower-2"></span>
@@ -52,7 +82,10 @@
               <span class="tower tower-6"></span>
             </div>
           </div>
-          <p id="visual-caption" class="visual-caption">Ville en équilibre instable.</p>
+          <div class="visual-copy">
+            <p id="visual-caption" class="visual-caption">District en équilibre instable.</p>
+            <p id="visual-subcaption" class="visual-subcaption">Le décor reste drôle juste assez pour faire oublier la procédure.</p>
+          </div>
         </section>
 
         <section class="stats-panel" aria-label="Indicateurs sociaux">
@@ -75,6 +108,10 @@
         </section>
 
         <section class="scenario-card">
+          <div class="scenario-meta-row">
+            <span class="eyebrow eyebrow-inline">Décision du soir</span>
+            <span id="threat-level" class="threat-chip">Menace modérée</span>
+          </div>
           <p id="scenario-text" class="scenario-text"></p>
           <div id="scenario-tags" class="tag-row"></div>
         </section>
@@ -82,20 +119,22 @@
         <section class="decision-panel" aria-label="Choix du tour">
           <button id="choice-a" class="decision-btn"></button>
           <button id="choice-b" class="decision-btn alt"></button>
+          <button id="choice-c" class="decision-btn alt-2"></button>
+          <button id="choice-d" class="decision-btn alt-3"></button>
         </section>
 
         <p id="feedback" class="feedback" aria-live="polite" aria-atomic="true"></p>
       </section>
 
       <section id="ending-screen" class="screen card ending-card">
-        <p class="eyebrow">Fin de partie</p>
+        <p class="eyebrow">Verdict final</p>
         <h3 id="ending-title">Fin détectée</h3>
         <div id="ending-visual" class="ending-visual mood-balanced"></div>
         <p id="ending-text" class="lede"></p>
         <div id="ending-stats" class="ending-stats"></div>
         <div class="ending-actions">
-          <button id="share-btn" class="secondary-btn">Partager</button>
-          <button id="restart-btn" class="primary-btn">Recommencer</button>
+          <button id="share-btn" class="secondary-btn">Partager le rapport</button>
+          <button id="restart-btn" class="primary-btn">Relancer la simulation</button>
         </div>
         <p id="share-status" class="share-status" aria-live="polite"></p>
         <textarea id="share-fallback" class="share-fallback" readonly aria-label="Texte du rapport à copier manuellement"></textarea>
