@@ -21,8 +21,9 @@
           un peu de liberté humaine dans la machine.
         </p>
         <p class="intro-meta">8 tours · 4 indicateurs · plusieurs fins</p>
+        <p class="intro-note">Un mini-jeu narratif. À chaque tour, vous tranchez.</p>
         <div class="intro-actions">
-          <button id="start-btn" class="primary-btn">Commencer</button>
+          <button id="start-btn" class="primary-btn">Jouer</button>
         </div>
         <p class="intro-note">Choisissez librement. Le système fera semblant d'avoir tout prévu.</p>
       </section>
@@ -35,6 +36,24 @@
           </div>
           <p class="status-note">ORACLE-RH recommande, vous tranchez.</p>
         </header>
+
+        <div id="turn-track" class="turn-track" aria-label="Progression dans la partie"></div>
+
+        <section class="visual-panel" aria-label="État visuel de la ville">
+          <div id="city-visual" class="city-visual mood-balanced">
+            <div class="city-sky"></div>
+            <div class="city-orb"></div>
+            <div class="cityline" aria-hidden="true">
+              <span class="tower tower-1"></span>
+              <span class="tower tower-2"></span>
+              <span class="tower tower-3"></span>
+              <span class="tower tower-4"></span>
+              <span class="tower tower-5"></span>
+              <span class="tower tower-6"></span>
+            </div>
+          </div>
+          <p id="visual-caption" class="visual-caption">Ville en équilibre instable.</p>
+        </section>
 
         <section class="stats-panel" aria-label="Indicateurs sociaux">
           <div class="stat-row">
@@ -60,7 +79,7 @@
           <div id="scenario-tags" class="tag-row"></div>
         </section>
 
-        <section class="decision-panel">
+        <section class="decision-panel" aria-label="Choix du tour">
           <button id="choice-a" class="decision-btn"></button>
           <button id="choice-b" class="decision-btn alt"></button>
         </section>
@@ -69,8 +88,9 @@
       </section>
 
       <section id="ending-screen" class="screen card ending-card">
-        <p class="eyebrow">Rapport terminal consolidé</p>
+        <p class="eyebrow">Fin de partie</p>
         <h3 id="ending-title">Fin détectée</h3>
+        <div id="ending-visual" class="ending-visual mood-balanced"></div>
         <p id="ending-text" class="lede"></p>
         <div id="ending-stats" class="ending-stats"></div>
         <div class="ending-actions">

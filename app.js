@@ -161,6 +161,10 @@ const scenarioTagsEl = document.getElementById('scenario-tags');
 const feedbackEl = document.getElementById('feedback');
 const shareStatusEl = document.getElementById('share-status');
 const shareFallbackEl = document.getElementById('share-fallback');
+const turnTrackEl = document.getElementById('turn-track');
+const cityVisualEl = document.getElementById('city-visual');
+const visualCaptionEl = document.getElementById('visual-caption');
+const endingVisualEl = document.getElementById('ending-visual');
 
 const metricElements = {
   emploi: {
@@ -220,10 +224,81 @@ function updateMetricUI() {
   });
 }
 
+function renderTurnTrack() {
+  if (!turnTrackEl) return;
+
+  turnTrackEl.replaceChildren(
+    ...scenarios.map((_, index) => {
+      const dot = document.createElement('span');
+      dot.className = 'turn-dot';
+      if (index < currentTurn) dot.classList.add('done');
+      if (index === currentTurn) dot.classList.add('current');
+      dot.setAttribute('aria-hidden', 'true');
+      return dot;
+    })
+  );
+}
+
+function getVisualState() {
+  const values = Object.values(metrics);
+  const average = values.reduce((sum, value) => sum + value, 0) / values.length;
+  const strongest = Object.entries(metrics).sort((a, b) => b[1] - a[1])[0]?.[0];
+  const weakest = Object.entries(metrics).sort((a, b) => a[1] - b[1])[0]?.[0];
+
+  if (metrics.humanite >= 70 && metrics.stabilite >= 60) {
+    return { mood: 'mood-human', caption: 'La ville redevient respirable.' };
+  }
+
+  if (metrics.innovation >= 75 && metrics.humanite <= 35) {
+    return { mood: 'mood-machine', caption: 'La machine prend visiblement l’avantage.' };
+  }
+
+  if (metrics.emploi >= 75 && metrics.stabilite < 45) {
+    return { mood: 'mood-overdrive', caption: 'Tout tourne vite. Trop vite.' };
+  }
+
+  if (average < 42 || metrics.humanite <= 20) {
+    return { mood: 'mood-collapse', caption: 'Le décor tient. La ville, moins.' };
+  }
+
+  if (strongest === 'innovation') {
+    return { mood: 'mood-machine', caption: 'L’innovation redessine l’horizon.' };
+  }
+
+  if (strongest === 'humanite') {
+    return { mood: 'mood-human', caption: 'Les humains reprennent un peu de place.' };
+  }
+
+  if (strongest === 'emploi' && weakest === 'stabilite') {
+    return { mood: 'mood-overdrive', caption: 'L’activité grimpe, l’équilibre vacille.' };
+  }
+
+  return { mood: 'mood-balanced', caption: 'Ville en équilibre instable.' };
+}
+
+function updateVisualState() {
+  const { mood, caption } = getVisualState();
+
+  if (cityVisualEl) {
+    cityVisualEl.className = `city-visual ${mood}`;
+  }
+
+  if (visualCaptionEl) {
+    visualCaptionEl.textContent = caption;
+  }
+
+  if (endingVisualEl) {
+    endingVisualEl.className = `ending-visual ${mood}`;
+    endingVisualEl.textContent = caption;
+  }
+}
+
 function renderScenario() {
   const scenario = scenarios[currentTurn];
   turnLocked = false;
   turnIndexEl.textContent = String(currentTurn + 1);
+  renderTurnTrack();
+  updateVisualState();
   scenarioTitleEl.textContent = scenario.title;
   scenarioTextEl.textContent = scenario.text;
   scenarioTagsEl.replaceChildren(
@@ -233,11 +308,11 @@ function renderScenario() {
       return chip;
     })
   );
-  choiceA.textContent = scenario.choices[0].label;
-  choiceB.textContent = scenario.choices[1].label;
+  choiceA.textContent = `A · ${scenario.choices[0].label}`;
+  choiceB.textContent = `B · ${scenario.choices[1].label}`;
   choiceA.disabled = false;
   choiceB.disabled = false;
-  feedbackEl.textContent = 'Choisissez librement. Le système commentera après coup.';
+  feedbackEl.textContent = 'Faites votre choix.';
 }
 
 function applyChoice(choiceIndex) {
@@ -255,6 +330,7 @@ function applyChoice(choiceIndex) {
   });
 
   updateMetricUI();
+  updateVisualState();
   feedbackEl.textContent = choice.feedback;
   currentTurn += 1;
 
@@ -319,6 +395,7 @@ function buildShareText(ending) {
 function showEnding() {
   const ending = determineEnding();
   finalSummary = buildShareText(ending);
+  renderTurnTrack();
   endingTitleEl.textContent = ending.title;
   endingTextEl.textContent = ending.text;
   endingStatsEl.replaceChildren(
@@ -384,6 +461,7 @@ function startGame() {
   turnLocked = false;
   resetMetrics();
   updateMetricUI();
+  updateVisualState();
   renderScenario();
   setActiveScreen(gameScreen);
 }
@@ -395,3 +473,4 @@ choiceA.addEventListener('click', () => applyChoice(0));
 choiceB.addEventListener('click', () => applyChoice(1));
 
 updateMetricUI();
+updateVisualState();
