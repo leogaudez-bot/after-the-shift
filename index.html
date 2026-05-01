@@ -92,11 +92,15 @@
                     <div class="status-head">
                       <div>
                         <span class="status-label" id="file-label">Citizen file · ATS-001</span>
-                        <div class="score" id="score-value">64</div>
+                        <div class="score-line">
+                          <div class="score" id="score-value">64/100</div>
+                          <span class="score-caption">score social en direct</span>
+                        </div>
                         <div class="muted">Indice de maintenabilité sociale</div>
                       </div>
                       <div class="stamp" id="stamp">Stable</div>
                     </div>
+                    <div class="progress-strip" id="day-progress"></div>
                   </div>
 
                   <div class="banner toxic">
@@ -146,19 +150,24 @@
                 </section>
 
                 <section id="screen-result" class="hidden">
-                  <div class="result-card" id="result-card">
-                    <span class="result-label" id="result-kicker">Verdict du soir</span>
-                    <div class="score" id="result-score">68</div>
-                    <div class="stamp" id="result-stamp">Maintenu</div>
-                    <div class="result-quote" id="result-copy">
-                      Votre enthousiasme paraît désormais artificiel. La surveillance est prolongée.
+                    <div class="result-card" id="result-card">
+                      <span class="result-label" id="result-kicker">Verdict du soir</span>
+                      <div class="score-line result-score-line">
+                        <div class="score" id="result-score">68/100</div>
+                        <span class="score-caption">score après arbitrage</span>
+                      </div>
+                      <div class="stamp" id="result-stamp">Maintenu</div>
+                      <div class="result-quote" id="result-copy">
+                        Votre enthousiasme paraît désormais artificiel. La surveillance est prolongée.
+                      </div>
+                      <div class="delta-panel" id="delta-panel"></div>
+                      <div class="result-stats" id="result-stats"></div>
+                      <div class="next-tease" id="next-tease"></div>
+                      <div class="cta-row">
+                        <button class="primary-btn" id="restart-day">Jour suivant</button>
+                        <button class="ghost-btn" id="replay-choice">Revoir les choix</button>
+                      </div>
                     </div>
-                    <div class="result-stats" id="result-stats"></div>
-                    <div class="cta-row">
-                      <button class="primary-btn" id="restart-day">Jour suivant</button>
-                      <button class="ghost-btn" id="replay-choice">Revoir les choix</button>
-                    </div>
-                  </div>
                 </section>
               </div>
             </div>

@@ -140,19 +140,28 @@ const memoCopyEl = document.getElementById('memo-copy');
 const scenarioTitleEl = document.getElementById('scenario-title');
 const scenarioTextEl = document.getElementById('scenario-text');
 const statsOverviewEl = document.getElementById('stats-overview');
+const dayProgressEl = document.getElementById('day-progress');
 const choicesEl = document.getElementById('choices');
 const resultScoreEl = document.getElementById('result-score');
 const resultStampEl = document.getElementById('result-stamp');
 const resultCopyEl = document.getElementById('result-copy');
+const deltaPanelEl = document.getElementById('delta-panel');
+const nextTeaseEl = document.getElementById('next-tease');
 const resultStatsEl = document.getElementById('result-stats');
 const resultCardEl = document.getElementById('result-card');
 const resultKickerEl = document.getElementById('result-kicker');
 const screenScan = document.getElementById('screen-scan');
 const screenChoice = document.getElementById('screen-choice');
 const screenResult = document.getElementById('screen-result');
+const startDayBtn = document.getElementById('start-day');
+const backToScanBtn = document.getElementById('back-to-scan');
+const confirmChoiceBtn = document.getElementById('confirm-choice');
+const restartDayBtn = document.getElementById('restart-day');
+const replayChoiceBtn = document.getElementById('replay-choice');
 
 let currentTurn = 0;
 let selectedChoice = 0;
+let lastEffect = null;
 
 const tickerPool = [
   'SYSTEM NOTE · Votre valeur humaine sera recalculée ce soir.',
@@ -187,6 +196,14 @@ function formatValue(n) {
   return `${n}`.padStart(2, '0');
 }
 
+function formatScore(n) {
+  return `${n}/100`;
+}
+
+function formatDelta(delta) {
+  return `${delta > 0 ? '+' : ''}${delta}`;
+}
+
 function setPhase(label) {
   phaseChipEl.textContent = label;
 }
@@ -197,30 +214,74 @@ function setScreen(screen) {
   screenResult.classList.toggle('hidden', screen !== 'result');
 }
 
-function renderOverview() {
-  statsOverviewEl.innerHTML = '';
-  statDefs.forEach(([key, label, tone]) => {
-    const meter = document.createElement('div');
-    meter.className = 'meter';
-    meter.innerHTML = `
-      <div class="meter-top"><strong>${label}</strong><span>${metrics[key]}</span></div>
-      <div class="meter-bar"><i class="${tone}" style="width:${metrics[key]}%"></i></div>
+function renderDayProgress() {
+  dayProgressEl.innerHTML = '';
+  scenarios.forEach((scenario, index) => {
+    const step = document.createElement('div');
+    const status = index < currentTurn ? 'done' : index === currentTurn ? 'current' : 'upcoming';
+    step.className = `progress-node ${status}`;
+    step.innerHTML = `
+      <span>${formatValue(index + 1)}</span>
+      <small>${status === 'done' ? 'archivé' : status === 'current' ? 'actif' : 'à venir'}</small>
     `;
-    statsOverviewEl.appendChild(meter);
+    dayProgressEl.appendChild(step);
   });
 }
 
-function renderResultStats() {
-  resultStatsEl.innerHTML = '';
+function renderMetricSliders(container, deltaMap = null) {
+  container.innerHTML = '';
   statDefs.forEach(([key, label, tone]) => {
-    const card = document.createElement('div');
-    card.className = 'mini-stat';
-    card.innerHTML = `
-      <strong>${label}</strong>
-      <div class="mini-stat-value ${tone}">${metrics[key]}</div>
+    const meter = document.createElement('div');
+    meter.className = 'meter slider-meter';
+    const deltaMarkup = deltaMap
+      ? `<span class="delta ${deltaMap[key] >= 0 ? 'up' : 'down'}">${formatDelta(deltaMap[key])}</span>`
+      : '<span class="meter-scale">/100</span>';
+    meter.innerHTML = `
+      <div class="meter-top">
+        <strong>${label}</strong>
+        <span>${metrics[key]}/100</span>
+      </div>
+      <div class="meter-bar"><i class="${tone}" style="width:${metrics[key]}%"></i></div>
+      <div class="meter-foot">
+        <small>0</small>
+        ${deltaMarkup}
+        <small>100</small>
+      </div>
     `;
-    resultStatsEl.appendChild(card);
+    container.appendChild(meter);
   });
+}
+
+function renderOverview() {
+  renderMetricSliders(statsOverviewEl);
+}
+
+function renderResultStats() {
+  renderMetricSliders(resultStatsEl, lastEffect);
+}
+
+function renderDeltaPanel(choice) {
+  deltaPanelEl.innerHTML = '';
+  statDefs.forEach(([key, label]) => {
+    const chip = document.createElement('div');
+    const delta = choice.effect[key];
+    chip.className = `delta-chip ${delta >= 0 ? 'up' : 'down'}`;
+    chip.innerHTML = `<strong>${label}</strong><span>${formatDelta(delta)}</span>`;
+    deltaPanelEl.appendChild(chip);
+  });
+}
+
+function getNextTease() {
+  const nextScenario = scenarios[currentTurn + 1];
+  if (!nextScenario) {
+    return 'Dernier arbitrage atteint · le conseil final prépare votre classement définitif.';
+  }
+
+  const pressure = computeScore() >= 65
+    ? 'Votre score attire une nouvelle exigence de performance.'
+    : 'Votre dossier fragilisé déclenche une surveillance plus intrusive.';
+
+  return `Jour ${formatValue(currentTurn + 2)} · ${nextScenario.title.replace(/^Jour \d+ · /, '')}. ${pressure}`;
 }
 
 function renderScan() {
@@ -231,16 +292,32 @@ function renderScan() {
   dayLabelEl.textContent = `Shift day ${formatValue(currentTurn + 1)}`;
   timeLabelEl.textContent = `22:${14 + currentTurn} · District 9`;
   fileLabelEl.textContent = `Citizen file · ATS-${formatValue(currentTurn + 1)}`;
-  scoreValueEl.textContent = score;
+  scoreValueEl.textContent = formatScore(score);
   stampEl.textContent = stamp.label;
   stampEl.className = `stamp ${stamp.className}`;
   bulletinCopyEl.textContent = scenario.alert;
   adCopyEl.textContent = scenario.ad;
   memoCopyEl.textContent = scenario.memo;
-  tickerEl.textContent = tickerPool[currentTurn % tickerPool.length];
+  tickerEl.textContent = currentTurn === 0
+    ? tickerPool[currentTurn % tickerPool.length]
+    : `JOUR ${formatValue(currentTurn + 1)} · Nouveau contrôle ouvert. Votre dernier verdict influence déjà l'audit.`;
+  startDayBtn.textContent = currentTurn === 0
+    ? "Lancer l'évaluation"
+    : `Ouvrir le dossier du jour ${formatValue(currentTurn + 1)}`;
   renderOverview();
+  renderDayProgress();
   setPhase('Phase · Scan du soir');
   setScreen('scan');
+}
+
+function updateChoiceSelection(index) {
+  selectedChoice = index;
+  const scenario = scenarios[currentTurn];
+  document.querySelectorAll('.choice-card').forEach((node, i) => {
+    node.classList.toggle('active', i === index);
+  });
+  confirmChoiceBtn.textContent = `Voir le verdict · ${scenario.choices[index].tone}`;
+  tickerEl.textContent = `DÉCISION ${String.fromCharCode(65 + index)} · ${scenario.choices[index].label}`;
 }
 
 function renderChoices() {
@@ -260,15 +337,12 @@ function renderChoices() {
       <p>Conséquences masquées jusqu'au verdict.</p>
     `;
     button.addEventListener('click', () => {
-      selectedChoice = index;
-      document.querySelectorAll('.choice-card').forEach((node, i) => {
-        node.classList.toggle('active', i === index);
-      });
+      updateChoiceSelection(index);
     });
     choicesEl.appendChild(button);
   });
 
-  tickerEl.textContent = `DOSSIER ${formatValue(currentTurn + 1)} · ${scenario.threat.toUpperCase()} · Une décision sera archivée.`;
+  updateChoiceSelection(0);
   setPhase('Phase · Choix de survie');
   setScreen('choice');
 }
@@ -305,6 +379,7 @@ function getFinalEnding(score) {
 function applyChoice() {
   const scenario = scenarios[currentTurn];
   const choice = scenario.choices[selectedChoice];
+  lastEffect = choice.effect;
 
   Object.entries(choice.effect).forEach(([key, delta]) => {
     metrics[key] = clamp(metrics[key] + delta);
@@ -317,24 +392,27 @@ function applyChoice() {
   if (finalTurn) {
     const ending = getFinalEnding(score);
     resultKickerEl.textContent = ending.kicker;
-    resultScoreEl.textContent = score;
+    resultScoreEl.textContent = formatScore(score);
     resultStampEl.textContent = ending.stamp;
     resultStampEl.className = 'stamp bad';
     resultCopyEl.textContent = `${choice.feedback} ${ending.text}`;
     resultCardEl.classList.add('final-form');
-    document.getElementById('restart-day').textContent = 'Relancer la simulation';
+    restartDayBtn.textContent = 'Relancer la simulation';
+    nextTeaseEl.textContent = 'Dernière décision enregistrée · relancez pour tester un autre arc de survie.';
   } else {
     resultKickerEl.textContent = `Verdict du soir · Jour ${formatValue(currentTurn + 1)}`;
-    resultScoreEl.textContent = score;
+    resultScoreEl.textContent = formatScore(score);
     resultStampEl.textContent = stamp.label;
     resultStampEl.className = `stamp ${stamp.className}`;
     resultCopyEl.textContent = choice.feedback;
     resultCardEl.classList.remove('final-form');
-    document.getElementById('restart-day').textContent = 'Jour suivant';
+    restartDayBtn.textContent = `Ouvrir le jour ${formatValue(currentTurn + 2)}`;
+    nextTeaseEl.textContent = getNextTease();
   }
 
+  renderDeltaPanel(choice);
   renderResultStats();
-  tickerEl.textContent = `VERDICT · ${resultStampEl.textContent} · Le dossier du jour a été archivé.`;
+  tickerEl.textContent = `VERDICT · ${resultStampEl.textContent} · ${choice.tone.toUpperCase()} enregistré.`;
   setPhase(finalTurn ? 'Phase · Verdict terminal' : 'Phase · Verdict du soir');
   setScreen('result');
 }
@@ -351,14 +429,16 @@ function nextStep() {
 function startRun() {
   currentTurn = 0;
   selectedChoice = 0;
+  lastEffect = null;
   resetMetrics();
+  confirmChoiceBtn.textContent = "Voir le verdict";
   renderScan();
 }
 
-document.getElementById('start-day').addEventListener('click', renderChoices);
-document.getElementById('back-to-scan').addEventListener('click', renderScan);
-document.getElementById('confirm-choice').addEventListener('click', applyChoice);
-document.getElementById('restart-day').addEventListener('click', nextStep);
-document.getElementById('replay-choice').addEventListener('click', renderChoices);
+startDayBtn.addEventListener('click', renderChoices);
+backToScanBtn.addEventListener('click', renderScan);
+confirmChoiceBtn.addEventListener('click', applyChoice);
+restartDayBtn.addEventListener('click', nextStep);
+replayChoiceBtn.addEventListener('click', renderChoices);
 
 startRun();
